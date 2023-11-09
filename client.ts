@@ -26,11 +26,13 @@ socket.on('connect',()=>{
 })
 
 // Chat Message
-socket.on('message',(msg)=>{
-    console.log('Message received: '+msg)
+socket.on('message',(data)=>{
+    console.log(data)
 })
 
-// socket.emit('chat message',"Hello from client")
+socket.on("welcome",(data)=>{
+    console.log(data.toString())
+})
 
 process.stdin.on('data',(data)=>{
     console.log('message::',data.toString())
