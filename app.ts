@@ -6,16 +6,21 @@ import { Server } from "socket.io";
 // const app : Express= express()
 const app  = express()
 const httpServer = createServer(app)
-const port: number = 3000
+const port: number = 4000
 const host: string = 'http://localhost'
-const io: Server = new Server(httpServer)
+const io: Server = new Server(httpServer,{
+  cors: {
+          origin: "http://localhost:3000"
+        },
+  connectionStateRecovery:{}
+}
+  )
 
-// HANDLERS
-import messageHandler from "./handlers/message";
+
 // APP
 
 
-io.socketsJoin("room1")
+io.socketsJoin("General")
 
 
 function addName(){
@@ -32,7 +37,7 @@ function addName(){
 const setName= addName()
 
 io.use((socket,next)=>{
-  socket.join("room1")
+  socket.join("General")
   // console.log('A user connected', socket.rooms);
   socket.data.username = setName()
   next()
@@ -42,8 +47,14 @@ io.use((socket,next)=>{
 // FUNCTIONS
 
 function handleMessage(user: string, msg: string){
-  return `${user} : ${msg.toString().trim()}`
+  // return `${user} : ${msg.toString().trim()}`
+  return {
+    username: user,
+    message: msg.toString().trim()
+  }
 }
+
+const roomUsers = new Map()
 
 // ON CONNECTION
 io.on('connection', (socket) => {
@@ -52,6 +63,23 @@ io.on('connection', (socket) => {
 
     io.emit("welcome","Hello from APP.TS")
 
+    
+    //
+    // JOIN ROOM
+    //
+
+    socket.on('joinRoom',(roomName,username)=>{
+      
+      if(!roomUsers.has(roomName)){
+        roomUsers.set(roomName,[])
+      }
+      socket.join(roomName)
+      roomUsers.get(roomName).push({id:socket.id,name:username})
+
+      io.to(roomName).emit('roomUsers',roomUsers.get(roomName))
+    })
+
+    
     //
     // ON DISCONNECT
     //
@@ -65,7 +93,7 @@ io.on('connection', (socket) => {
     //
 
     socket.on('chat message', (msg) => {
-        console.log(`${socket.data.username} :`,msg.toString().trim())
+      console.log(msg.toString().trim())
         const string = handleMessage(socket.data.username,msg)
         io.emit("message",string)
     });

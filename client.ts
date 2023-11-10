@@ -2,7 +2,7 @@ import io from 'socket.io-client'
 import  readline , { ReadLine} from 'readline'
 import prompts from 'prompts'
 
-const socket = io('http://localhost:3000')
+const socket = io('http://localhost:4000')
 
 // const r1: ReadLine = readline.createInterface({
 //     input: process.stdin,
