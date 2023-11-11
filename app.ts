@@ -1,9 +1,18 @@
 import express from "express";
 import { createServer} from 'http'
 import { Server } from "socket.io";
+
+//
+// FUNCTIONS
+//
+
+import { randomColor } from "./functions/randomColor";
+import { randomName }  from "./functions/randomName";
+
+const setName= randomName()
 // import { join } from 'path'
 
-// const app : Express= express()
+
 const app  = express()
 const httpServer = createServer(app)
 const port: number = 4000
@@ -23,18 +32,6 @@ const io: Server = new Server(httpServer,{
 io.socketsJoin("General")
 
 
-function addName(){
-  let count = 0
-  let listName=["Alice", "Henry","Georges"]
-  return ()=>{
-    let name= listName[count]
-    count = count === 2? 0 : count+=1
-    return name
-
-  }
-}
-
-const setName= addName()
 
 io.use((socket,next)=>{
   socket.join("General")
@@ -69,12 +66,16 @@ io.on('connection', (socket) => {
     //
 
     socket.on('joinRoom',(roomName,username)=>{
-      
+
+      // Attribute a color to the User
+
+      const color = randomColor()
+
       if(!roomUsers.has(roomName)){
         roomUsers.set(roomName,[])
       }
       socket.join(roomName)
-      roomUsers.get(roomName).push({id:socket.id,name:username})
+      roomUsers.get(roomName).push({id:socket.id,name:username, color: color})
 
       io.to(roomName).emit('roomUsers',roomUsers.get(roomName))
     })
