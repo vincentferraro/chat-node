@@ -15,6 +15,8 @@ import { randomName }  from "./src/functions/randomName";
 import  joinRoom  from "./src/sockets/joinRoom";
 import disconnection  from "./src/sockets/disconnection";
 import chatMessage from "./src/sockets/chatMessage";
+import setUsername from "./src/sockets/setUsername";
+import  getSocket  from "./src/sockets/getSocket";
 //
 // INTERFACES
 //
@@ -44,12 +46,12 @@ io.socketsJoin("General")
 
 
 
-io.use((socket:Socket ,next: Function): void=>{
-  socket.join("General")
-  // console.log('A user connected', socket.rooms);
-  socket.data.username= setName()
-  next()
-})
+// io.use((socket:Socket ,next: Function): void=>{
+//   socket.join("General")
+//   // console.log('A user connected', socket.rooms);
+//   socket.data.username= setName()
+//   next()
+// })
 
 
 // FUNCTIONS
@@ -59,17 +61,26 @@ const roomUsers = new Map()
 // ON CONNECTION
 io.on('connection', (socket: Socket) => {
     
-    console.log(`${socket.data.username} connected`)
+    console.log(`User connected`)
 
     io.emit("welcome","Hello from APP.TS")
+
+    //
+    // Set Username
+    //
+    setUsername(socket)
 
     
     //
     // JOIN ROOM
     //
-    
+
     joinRoom(socket,io,roomUsers)
     
+    //
+    // GET SOCKET
+    //
+    getSocket(socket,io, roomUsers)
     //
     // ON DISCONNECT
     //
@@ -81,6 +92,7 @@ io.on('connection', (socket: Socket) => {
     //
     chatMessage(socket, io)
     
+
 
   });
 
