@@ -2,12 +2,12 @@ import express, { Express} from "express";
 import { createServer, Server as serv} from 'http'
 import { Server, Socket } from "socket.io";
 
+
 //
-// FUNCTIONS
+// IMPORT FUNCTIONS
 //
 
-
-import { randomName }  from "./src/functions/randomName";
+// import { randomName }  from "./src/functions/randomName";
 
 //
 // SOCKETS FUNCTIONS
@@ -17,14 +17,20 @@ import disconnection  from "./src/sockets/disconnection";
 import chatMessage from "./src/sockets/chatMessage";
 import setUsername from "./src/sockets/setUsername";
 import  getSocket  from "./src/sockets/getSocket";
-//
-// INTERFACES
-//
-import { Message } from "./src/interfaces/message";
-const setName= randomName()
+
+
+
 
 // import { join } from 'path'
 
+//
+// FUNCTIONS
+//
+
+// const setName= randomName()
+
+
+// Creating Server
 
 const app : Express = express()
 const httpServer: serv = createServer(app)
@@ -44,7 +50,9 @@ const io: Server = new Server(httpServer,{
 
 io.socketsJoin("General")
 
-
+//
+// MIDDLEWARES
+//
 
 // io.use((socket:Socket ,next: Function): void=>{
 //   socket.join("General")
@@ -53,8 +61,9 @@ io.socketsJoin("General")
 //   next()
 // })
 
-
-// FUNCTIONS
+//
+// STATES
+//
 
 const roomUsers = new Map()
 
@@ -75,7 +84,7 @@ io.on('connection', (socket: Socket) => {
     // JOIN ROOM
     //
 
-    joinRoom(socket,io,roomUsers)
+    joinRoom(socket,roomUsers)
     
     //
     // GET SOCKET

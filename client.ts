@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import  readline , { ReadLine} from 'readline'
 import prompts from 'prompts'
-
+import {randomName} from './src/functions/randomName'
 const socket = io('http://localhost:4000')
 
 // const r1: ReadLine = readline.createInterface({
@@ -26,9 +26,12 @@ socket.on('connect',()=>{
 })
 
 // Chat Message
-socket.on('message',(data)=>{
+socket.on('chat message',(data)=>{
     console.log(data)
 })
+socket.emit('setUsername','Client')
+socket.emit('joinRoom', 'general')
+// socket.emit('joinRoom','first-floor')
 
 socket.on("welcome",(data)=>{
     console.log(data.toString())
