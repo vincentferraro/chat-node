@@ -8,6 +8,7 @@ import { Server, Socket } from "socket.io";
 //
 
 // import { randomName }  from "./src/functions/randomName";
+import { randomColor } from "./src/functions/randomColor";
 
 //
 // SOCKETS FUNCTIONS
@@ -69,13 +70,16 @@ const io: Server = new Server(httpServer,{
 const roomUsers = new Map()
 
 // ON CONNECTION
-io.on('connection', (socket: Socket) => {
+io.on('connection', async (socket: Socket) => {
     
     console.log(`User connected`)
 
     // io.emit("welcome","Hello from APP.TS")
   
     socket.join('general')
+    socket.data.color = randomColor()
+
+   
     //
     // Set Username
     //
@@ -86,12 +90,12 @@ io.on('connection', (socket: Socket) => {
     // JOIN ROOM
     //
 
-    joinRoom(socket,roomUsers)
+    joinRoom(socket)
     
     //
     // GET SOCKET
     //
-    getSocket(socket,io, roomUsers)
+    getSocket(socket)
     //
     // ON DISCONNECT
     //
@@ -111,3 +115,5 @@ io.on('connection', (socket: Socket) => {
 httpServer.listen(port,()=>{
     console.log(`Server launched on http://localhost:${port}`)
 })
+
+export { io }
