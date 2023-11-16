@@ -13,6 +13,7 @@ import { Server, Socket } from "socket.io";
 // SOCKETS FUNCTIONS
 //
 import  joinRoom  from "./src/sockets/joinRoom";
+import  leaveRoom  from "./src/sockets/leaveRoom";
 import disconnection  from "./src/sockets/disconnection";
 import chatMessage from "./src/sockets/chatMessage";
 import setUsername from "./src/sockets/setUsername";
@@ -48,7 +49,7 @@ const io: Server = new Server(httpServer,{
 // APP
 
 
-io.socketsJoin("General")
+// io.socketsJoin("general")
 
 //
 // MIDDLEWARES
@@ -72,8 +73,9 @@ io.on('connection', (socket: Socket) => {
     
     console.log(`User connected`)
 
-    io.emit("welcome","Hello from APP.TS")
-
+    // io.emit("welcome","Hello from APP.TS")
+  
+    socket.join('general')
     //
     // Set Username
     //
