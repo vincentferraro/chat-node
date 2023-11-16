@@ -18,7 +18,7 @@ import  leaveRoom  from "./src/sockets/leaveRoom";
 import disconnection  from "./src/sockets/disconnection";
 import chatMessage from "./src/sockets/chatMessage";
 import setUsername from "./src/sockets/setUsername";
-import  getSocket  from "./src/sockets/getSocket";
+import getUsersRooms from "./src/sockets/getUsersRoom";
 
 
 
@@ -56,28 +56,20 @@ const io: Server = new Server(httpServer,{
 // MIDDLEWARES
 //
 
-// io.use((socket:Socket ,next: Function): void=>{
-//   socket.join("General")
-//   // console.log('A user connected', socket.rooms);
-//   socket.data.username= setName()
-//   next()
-// })
-
 //
 // STATES
 //
 
-const roomUsers = new Map()
 
 // ON CONNECTION
 io.on('connection', async (socket: Socket) => {
     
     console.log(`User connected`)
 
-    // io.emit("welcome","Hello from APP.TS")
   
     socket.join('general')
     socket.data.color = randomColor()
+    
     io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
    
     //
@@ -95,7 +87,7 @@ io.on('connection', async (socket: Socket) => {
     //
     // GET SOCKET
     //
-    getSocket(socket)
+    getUsersRooms(socket)
     //
     // ON DISCONNECT
     //

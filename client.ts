@@ -24,14 +24,12 @@ const run = async ()=>{
 
         socket.on('connect',()=>{
             console.log('Connected to the webSocket API')
-    
-            
-            // socket.emit('set_name',)
+  
         })
         socket.emit('setUsername', username)
         // Chat Message
         socket.on('chat message',(data)=>{
-            console.log(data)
+            console.log( data);
         })
     
         socket.on("welcome",(data)=>{
@@ -39,12 +37,17 @@ const run = async ()=>{
         })
     
         process.stdin.on('data',(data)=>{
-            console.log('message::',data.toString())
+            
             socket.emit('chat message',data)
         })
     
         process.stdout.on('data',(msg)=>{
             socket.emit('chat message',msg)
+            function clearPreviousLine() {
+                readline.moveCursor(process.stdout, 0, -1); // Move cursor up one line
+                readline.clearLine(process.stdout, 0);     // Clear the line
+              }
+              clearPreviousLine()
         })
         }catch(err){
         console.log('Error',err)

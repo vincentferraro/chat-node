@@ -41,6 +41,14 @@ export default async function handleCommand(msg: string,socket: Socket ){
         disconnect: ():void =>{
             io.to(socket.id).emit('chat message', 'Good Bye!')
             socket.disconnect()
+        },
+        to:():void=>{
+            const room = str.substring(3).split(' ')
+            const subString = room.slice(2).join(" ")
+            console.log(room)
+            if(room[0] ==='general'||room[0] ==='first'||room[0] ==='first'){
+                socket.to(room[0]).emit('chat message', room[1])
+            }
         }
     }
     const str: string = msg.toString().trim()

@@ -8,8 +8,8 @@ export default function chatMessage(socket: Socket, io: Server):void{
             if(msg.toString().trim().startsWith("/")){
                 handleCommand(msg,socket)
             }else{
-                const string = handleMessage(socket.data.username,msg)
-                io.emit('chat message',string)
+                const json = JSON.stringify(handleMessage(socket.data.username,msg))
+                io.emit('chat message',json)
             }
           
       });
