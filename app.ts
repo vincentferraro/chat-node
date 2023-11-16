@@ -78,7 +78,7 @@ io.on('connection', async (socket: Socket) => {
   
     socket.join('general')
     socket.data.color = randomColor()
-
+    io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
    
     //
     // Set Username
