@@ -1,4 +1,4 @@
-import { io } from "../../src/app"
+import { io } from "../../app"
 import { Username } from "../interfaces/username"
 
 export default async function getUsersRooms(roomName:string): Promise<Array<Username>>{

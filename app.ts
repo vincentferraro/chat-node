@@ -1,7 +1,7 @@
 import express, { Express} from "express";
 import { createServer, Server as serv} from 'http'
 import serverSocket from "./src/sockets/connection";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 
 // MONGODB
 import connection from "./src/db/connectdb";
@@ -22,9 +22,9 @@ const io: Server = new Server(httpServer,{
   )
 
 
-function run(){
-  connection()
-  serverSocket(io)
+async function run(){
+  await connection()
+  await serverSocket(io)
 
 }
 run()
