@@ -3,6 +3,6 @@ export default  function handleMessage(user: string, data: Data):Data{
   return {
     username: user,
     room: data.room,
-    message: data.message.trim()
+    message: data.message
   }
 }

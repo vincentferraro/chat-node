@@ -5,6 +5,10 @@ const socket = io('http://localhost:4000')
 
 function run(){
     socket.connect()
+
+    // SOCKET EMIT
+
+    
     socket.on('connect',()=>{
         console.log('Connected')
     })
@@ -38,6 +42,8 @@ function run(){
         socket.emit('chat message', {room:'general', message:' Hello World'})
     },12000)
 
+
+    // Socket .ON
     socket.on('getUsersRoom',(data)=>{
         console.log(data)
     })
