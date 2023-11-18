@@ -1,16 +1,18 @@
-import {  Socket, Server } from "socket.io";
+import {  Socket} from "socket.io";
 import handleMessage from "../functions/handleMessage";
-import handleCommand from "../functions/handleCommand";
+import emitChatMessage from "./emit/emitChatMessage";
+import { Data } from "../interfaces/message";
 
-export default function chatMessage(socket: Socket, io: Server):void{
 
-    socket.on('chat message', async (msg: string) => {
-            if(msg.toString().trim().startsWith("/")){
-                handleCommand(msg,socket)
-            }else{
-                const json = JSON.stringify(handleMessage(socket.data.username,msg))
-                io.emit('chat message',json)
-            }
-          
+export default function chatMessage(socket: Socket):void{
+
+    socket.on('chat message', (data: Data) => {
+        try{
+            const jsonStringify: string = JSON.stringify(handleMessage(socket.data.username,data))
+            emitChatMessage(data.room, jsonStringify)
+        }catch(err){
+            console.error('Error handle chat message: ', err)
+        }
+                
       });
 }

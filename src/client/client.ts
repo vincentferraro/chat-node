@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import  readline , { ReadLine} from 'readline'
 import prompts from 'prompts'
-import {randomName} from './src/functions/randomName'
+
 const socket = io('http://localhost:4000')
 
 // const r1: ReadLine = readline.createInterface({

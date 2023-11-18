@@ -6,6 +6,6 @@ export default async function  getUsersRoom(socket : Socket){
    
     socket.on('getUsersRoom', async(roomName)=>{
         const listUsers = await getUsersRooms(roomName)       
-            io.to(socket.id).emit('chat message', listUsers)
+            io.to(socket.id).emit('getUsersRoom', listUsers)
     })
 }

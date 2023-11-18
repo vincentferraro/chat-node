@@ -1,8 +1,8 @@
-import { Message } from "../interfaces/message"
-export default  function handleMessage(user: string, msg: string):Message{
-  // return `${user} : ${msg.toString().trim()}`
+import { Data } from "../interfaces/message"
+export default  function handleMessage(user: string, data: Data):Data{
   return {
     username: user,
-    message: msg.toString().trim()
+    room: data.room,
+    message: data.message.trim()
   }
 }

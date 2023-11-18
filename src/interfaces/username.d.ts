@@ -1,4 +1,5 @@
-export interface username{
+export interface Username{
     id: string,
-    username: string
+    username: string,
+    color?: string
 }

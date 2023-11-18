@@ -1,12 +1,11 @@
 import { io } from "../../app"
-import { username } from "../interfaces/username"
+import { Username } from "../interfaces/username"
 
-export default async function getUsersRooms(roomName:string): Promise<Array<username>>{
+export default async function getUsersRooms(roomName:string): Promise<Array<Username>>{
     const sockets = await io.fetchSockets()
-    const listUsers: Array<username> = []
+    const listUsers: Array<Username> = []
     if(roomName === 'general' || roomName === 'first' || roomName === 'second' ){
         for(const socket of sockets){
-            console.log(socket.data.username)
             if(socket.rooms.has(roomName)){
                 const data= {
                         id: socket.id,

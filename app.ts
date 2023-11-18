@@ -36,8 +36,9 @@ import getUsersRooms from "./src/sockets/getUsersRoom";
 
 const app : Express = express()
 const httpServer: serv = createServer(app)
-const port: number = 4000
-const host: string = 'http://localhost'
+const host: string = 'localhost'
+// const host: string = 'localhost';
+const port: number = 4000;
 const io: Server = new Server(httpServer,{
   cors: {
           origin: "http://localhost:3000"
@@ -97,15 +98,15 @@ io.on('connection', async (socket: Socket) => {
     //
     // ON CHAT MESSAGE
     //
-    chatMessage(socket, io)
+    chatMessage(socket)
     
 
 
   });
 
 
-httpServer.listen(port,()=>{
-    console.log(`Server launched on http://localhost:${port}`)
+httpServer.listen(port,host,()=>{
+    console.log(`Server launched on http://${host}:${port}`)
 })
 
 export { io }
