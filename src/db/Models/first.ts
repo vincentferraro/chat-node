@@ -1,9 +1,8 @@
 
-
 import { Schema, model } from "mongoose"
 import { IMessageDocument } from "../interfaces/IMessageDocument"
 
-const generalShema = new Schema<IMessageDocument>
+const firstShema = new Schema<IMessageDocument>
 ({
     userId: {type:String, required:true},
     date: {type:String, required:true},
@@ -12,5 +11,5 @@ const generalShema = new Schema<IMessageDocument>
 })
 
 
-export default class General extends model<IMessageDocument>('general', generalShema){}
+export default class First extends model<IMessageDocument>('first_floor', firstShema){}
 

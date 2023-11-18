@@ -1,5 +1,5 @@
 import { Socket  } from "socket.io";
-import { io } from "../../app";
+import { io } from "../../src/app.ts";
 import getUsersRooms from "./getUsersRoom";
 import handleMessage from "./handleMessage";
 import { Data } from "../interfaces/message";

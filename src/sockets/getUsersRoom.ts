@@ -1,5 +1,4 @@
 import { Socket,  } from "socket.io"
-import { io } from "../../app"
 import getUsersRooms from "../functions/getUsersRoom"
 import emitUsersRoom from "./emit/emitUsersRoom"
 export default async function  getUsersRoom(socket : Socket){
