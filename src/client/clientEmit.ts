@@ -14,9 +14,9 @@ function run(){
     //     console.log('Connected')
     // })
 
-    // setTimeout(()=>{
-    //     socket.emit('setUsername', 'ClientEmit')
-    // },2000)
+    setTimeout(()=>{
+        socket.emit('setUsername', 'ClientEmit')
+    },2000)
 
     // setTimeout(()=>{
     //     socket.emit('chat message', 'Hello Everyone')
@@ -45,18 +45,27 @@ function run(){
     
     setTimeout(()=>{
     
-        socket.emit('chat message', {room:'general', message:' Hello From Client Emit'})
+        socket.emit('chat message', {room:'general', message:' Hello2 From Client Emit'})
     
     },4000)
+    setTimeout(()=>{
     
+        socket.emit('get previous messages')
+    },6000)
     // Socket .ON
-    socket.on('getUsersRoom',(data)=>{
-        console.log(data)
-    })
+    // socket.on('getUsersRoom',(data)=>{
+    //     console.log(data)
+    // })
     
 
-    socket.on('chat message', (msg)=>{
-        console.log(msg)
+    // socket.on('chat message', (msg)=>{
+    //     console.log(msg)
+    // })
+    socket.on('previous messages', (datas)=>{
+        
+        for(const data of datas){
+            console.log(`{ "username":${data.username} , "room": ${data.room}, "message":${data.message}}`)
+        }
     })
 }
 

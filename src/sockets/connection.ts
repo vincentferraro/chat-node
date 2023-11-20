@@ -10,6 +10,7 @@ import setUsername from "./setUsername";
 import getUsersRooms from "./getUsersRoom";
 
 import { randomColor } from "../functions/randomColor";
+import previousMessage from "./previousMessages";
 
 
 export default async function serverSocket(io:Server){
@@ -22,6 +23,8 @@ export default async function serverSocket(io:Server){
         socket.data.color = randomColor()
         
         io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
+
+        previousMessage(socket)
         //
         // Set Username
         //
