@@ -1,7 +1,7 @@
 import { connect } from "mongoose";
 import General from "./Models/general";
-
-
+import getPreviousDocument from "./functions/getPreviousDocument";
+import createDocument from "./functions/createGeneralDocument";
 
 export default async function connection(){
     
@@ -16,19 +16,14 @@ export default async function connection(){
 async function main(){
     try{
         connection()
-        const general = new General({
-        userId: "user",
-        date: "11-18-2023",
-        message: "Hello Mong3"
-        })
+        const response = await getPreviousDocument()
+        console.log("Success",response)
         
-        await general.save()
-        console.log(general.message)
-        const response = await General.find()
-        console.log(response)
     }catch(err){
         console.error("ERROR: ", err)
     }
     
 }
 
+
+main()

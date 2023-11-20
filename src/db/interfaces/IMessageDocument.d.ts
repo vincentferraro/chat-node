@@ -1,6 +1,7 @@
 export interface IMessageDocument{
     userId: string,
-    date: string,
+    username:string,
+    date: Date,
     message: string
 }
 
