@@ -2,8 +2,9 @@ import { connect } from "mongoose";
 import General from "./Models/general";
 import getPreviousDocument from "./functions/getPreviousDocument";
 import createDocument from "./functions/createGeneralDocument";
+import deleteGeneralDocument from "./functions/deleteGeneralDocument";
 
-export default async function connection(){
+export default async function connection(): Promise <void>{
     
     try{
         await connect('mongodb://localhost:27017/colloc-db')
@@ -13,11 +14,10 @@ export default async function connection(){
     }
 }
 
-async function main(){
+async function main(): Promise<void>{
     try{
         connection()
-        const response = await getPreviousDocument()
-        console.log("Success",response)
+        const response = await deleteGeneralDocument('655b793f2ff6033f92c86')
         
     }catch(err){
         console.error("ERROR: ", err)
