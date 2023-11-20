@@ -11,6 +11,7 @@ export default  function chatMessage(socket: Socket):void{
 
     socket.on('chat message', async (data: Data) => {
         try{
+            console.log("DATE",data)
             const jsonStringify: string = JSON.stringify(handleMessage(socket.data.username,data))
             const input: IMessageDocument ={
                 userId:socket.id,

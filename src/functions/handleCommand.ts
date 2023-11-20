@@ -4,12 +4,16 @@ import getUsersRooms from "./getUsersRoom";
 import handleMessage from "./handleMessage";
 import { Data } from "../interfaces/message";
 
-export default async function handleCommand(msg: Data,socket: Socket ){
+export default async function handleCommand(msg: string,socket: Socket ){
 
     // Actions handle message in terminal in conditions the message start by "/"
     const actions: Record<string, () => void> ={
-        test:():void=>{
-            console.log("works")
+        help:():void=>{
+            console.log("/rooms - Display rooms available")
+            console.log("/users_rooms <room_name> - Display users connected to <room_name>")
+            console.log("/username <username> - Set up the username")
+            console.log("/leave_room <room_name> - Leave the room <room_name>")
+            console.log("/join_room <room_name> - Join the room <room_name>")
         },
         // /rooms
         rooms:():void=>{
@@ -20,15 +24,13 @@ export default async function handleCommand(msg: Data,socket: Socket ){
             io.to(socket.id).emit('chat message', roomsList)
         },
         // /users_room <roomName>
-        users_room: async (): Promise<void>=>{
-            const roomName = str.split(' ')           
-            const listUsers = await getUsersRooms(roomName[1])       
-            io.to(socket.id).emit('chat message', listUsers)
+        users_room:  (): void =>{
+            socket.emit('getUsersRoom')
         },
         // /username <newName>
         username:():void=>{
             const username = msg.toString().trim().split(' ')
-            socket.data.username = username[1]
+            socket.emit('setUsername',username[1])
         },
         // /leave_room
         leave_room:():void=>{
@@ -43,7 +45,6 @@ export default async function handleCommand(msg: Data,socket: Socket ){
             if(room[1]==="first" || room[1]=== "second"){
                 socket.join(room[1])
             }
-            io.to(socket.id).emit('chat message', `Welcome to '${room[1]}' channel`)
         },
         // /disconnect
         disconnect: ():void =>{
