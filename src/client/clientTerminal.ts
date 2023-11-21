@@ -15,17 +15,18 @@ const r1: ReadLine = readline.createInterface({
 const terminalColor= setColor()
 const resetColor = setResetColor()
 // console.log(terminalColor)
-socket.connect()
+
+setTimeout(()=>{
+    r1.question('What is your username?', (username)=>{
+        socket.emit('initialization', username)
+    })
+},1000)
+
+
 
 socket.on('connect', ()=>{
     console.log('Connected to ChatApp')
 })
-
-setTimeout(()=>{
-    r1.question('What is your username?', (username)=>{
-        socket.emit('setUsername', username)
-    })
-},1000)
 
 r1.on('line', (line) =>{
     if(line.startsWith('/')){

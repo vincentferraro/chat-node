@@ -12,17 +12,37 @@ import getUsersRooms from "./getUsersRoom";
 import { randomColor } from "../functions/randomColor";
 import previousMessage from "./previousMessages";
 
+import { redisConnection } from "../redis/redis";
+
 
 export default async function serverSocket(io:Server){
+
+    // REDIS CONNECTION
+
+    const client = await redisConnection()
+
     io.on('connection', async (socket: Socket) => {
-    
-        console.log(`User connected`)
-    
-      
-        socket.join('general')
+        
+        socket.on('initialization',(username)=>{
+
+          // Initialize redisValue to store in REDIS CACHE
+
+          const redisValue = JSON.stringify({
+            id:socket.id,
+            username: username
+          })
+
+          socket.data.username= username
+
+          client.sAdd('room:general',redisValue)
+          socket.join('general')
+          io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
+        })
+        
+
         socket.data.color = randomColor()
         
-        io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
+        
 
         previousMessage(socket)
         //
@@ -40,7 +60,7 @@ export default async function serverSocket(io:Server){
         //
         // ON DISCONNECT
         //
-        disconnection(socket)
+        disconnection(socket, client)
         //
         // ON CHAT MESSAGE
         //
