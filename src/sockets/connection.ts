@@ -19,7 +19,7 @@ export default async function serverSocket(io:Server){
 
     // REDIS CONNECTION
 
-    const client = await redisConnection()
+    const redis = await redisConnection()
 
     io.on('connection', async (socket: Socket) => {
         
@@ -34,7 +34,7 @@ export default async function serverSocket(io:Server){
 
           socket.data.username= username
 
-          client.sAdd('room:general',redisValue)
+          redis.sAdd('room:general',redisValue)
           socket.join('general')
           io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
         })
@@ -56,11 +56,11 @@ export default async function serverSocket(io:Server){
         //
         // GET SOCKET
         //
-        getUsersRooms(socket)
+        getUsersRooms(socket, redis)
         //
         // ON DISCONNECT
         //
-        disconnection(socket, client)
+        disconnection(socket, redis)
         //
         // ON CHAT MESSAGE
         //
