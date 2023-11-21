@@ -1,8 +1,8 @@
 import io from 'socket.io-client'
 import  readline , { ReadLine} from 'readline'
-import handleCommand from '../functions/handleCommand'
+import handleCommand from './functions/handleCommand'
 import { Socket } from 'socket.io'
-// import prompts from 'prompts'
+
 
 const socket = io('http://localhost:4000')
 
@@ -13,22 +13,20 @@ const r1: ReadLine = readline.createInterface({
 
 
 socket.connect()
+
 socket.on('connect', ()=>{
     console.log('Connected to ChatApp')
 })
-setTimeout(()=>{
-    r1.question('What is your username?', (username)=>{
-        socket.emit('setUsername', username)
-    })
-},2000)
 
-function displayHelp(){
-    console.log()
-}
+// setTimeout(()=>{
+//     r1.question('What is your username?', (username)=>{
+//         socket.emit('setUsername', username)
+//     })
+// },2000)
 
 r1.on('line', (line) =>{
     if(line.startsWith('/')){
-        // handleCommand(line, socket as Socket)
+        handleCommand(line, socket)
     }else{
         socket.emit('chat message',{room:"general", message:line})
     }
@@ -39,4 +37,9 @@ socket.on('chat message', (data)=>{
     console.log(`${json.username} : ${json.message}`)
 })
 
+socket.on('get users room', (data)=>{
+    console.log(data)
+})
 
+socket.emit('setUsername', 'vinc')
+socket.emit('get users room', 'general')
