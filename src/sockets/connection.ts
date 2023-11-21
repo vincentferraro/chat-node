@@ -8,7 +8,7 @@ import disconnection  from "./disconnection";
 import chatMessage from "./chatMessage";
 import setUsername from "./setUsername";
 import getUsersRooms from "./getUsersRoom";
-
+import getRooms from "./getRooms";
 import { randomColor } from "../functions/randomColor";
 import previousMessage from "./previousMessages";
 
@@ -34,7 +34,7 @@ export default async function serverSocket(io:Server){
 
           socket.data.username= username
 
-          redis.sAdd('room:general',redisValue)
+          redis.sAdd('user:room:general',redisValue)
           socket.join('general')
           io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
         })
@@ -65,6 +65,10 @@ export default async function serverSocket(io:Server){
         // ON CHAT MESSAGE
         //
         chatMessage(socket)
+        //
+        // GET ROOMS
+        //
+        getRooms(socket)
       });
 }
 

@@ -15,6 +15,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
         },
         // /rooms
         rooms:():void=>{
+            socket.emit('get rooms')
             // @TODO
             // const roomsAvailabe = ['general','first','second']
             // const roomsList = [...socket.rooms].filter(element =>{

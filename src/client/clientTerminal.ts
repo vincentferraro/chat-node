@@ -45,5 +45,8 @@ socket.on('get users room', (data)=>{
     console.log(data)
 })
 
+socket.on('get rooms',(rooms)=>{
+    console.log(rooms)
+})
 // socket.emit('setUsername', 'vinc')
 // socket.emit('get users room', 'general')
