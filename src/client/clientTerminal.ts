@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 import  readline , { ReadLine} from 'readline'
 import handleCommand from './functions/handleCommand'
-import { Socket } from 'socket.io'
+
+import { setColor, setResetColor } from './functions/setColor'
 
 
 const socket = io('http://localhost:4000')
@@ -11,18 +12,20 @@ const r1: ReadLine = readline.createInterface({
     output: process.stdout
 })
 
-
+const terminalColor= setColor()
+const resetColor = setResetColor()
+// console.log(terminalColor)
 socket.connect()
 
 socket.on('connect', ()=>{
     console.log('Connected to ChatApp')
 })
 
-// setTimeout(()=>{
-//     r1.question('What is your username?', (username)=>{
-//         socket.emit('setUsername', username)
-//     })
-// },2000)
+setTimeout(()=>{
+    r1.question('What is your username?', (username)=>{
+        socket.emit('setUsername', username)
+    })
+},1000)
 
 r1.on('line', (line) =>{
     if(line.startsWith('/')){
@@ -34,12 +37,12 @@ r1.on('line', (line) =>{
 
 socket.on('chat message', (data)=>{
     const json = JSON.parse(data)
-    console.log(`${json.username} : ${json.message}`)
+    console.log(terminalColor+`${json.username} : ${json.message}`+resetColor)
 })
 
 socket.on('get users room', (data)=>{
     console.log(data)
 })
 
-socket.emit('setUsername', 'vinc')
-socket.emit('get users room', 'general')
+// socket.emit('setUsername', 'vinc')
+// socket.emit('get users room', 'general')

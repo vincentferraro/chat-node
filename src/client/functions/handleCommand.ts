@@ -37,6 +37,8 @@ export default async function handleCommand(msg: string,socket: Socket ){
             const room = msg.toString().trim().split(' ')
             if(room[1]==="first" || room[1]=== "second"){
                 socket.emit('leave room',room[1])
+            }else{ 
+                console.log("message info : You can't leave 'general' room")
             }
         },
         // /join_room 
@@ -50,6 +52,9 @@ export default async function handleCommand(msg: string,socket: Socket ){
         disconnect: ():void =>{
             console.log('Good Bye!')
             socket.disconnect()
+        },
+        connect:():void =>{
+            socket.connect()
         },
         // /to/<roomName>
         to:():void=>{
