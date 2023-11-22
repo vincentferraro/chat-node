@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
-import { io } from "../../app";
-import { addRedis } from "../redis/redis";
-import emitInfoMessage from "./emit/emitInfoMessage";
+import { io } from "../../../app";
+import { addRedis } from "../../redis/redis";
+import emitInfoMessage from "../emit/emitInfoMessage";
 
 export default async function initialization(socket: Socket, redis: any): Promise<void>{
     try{

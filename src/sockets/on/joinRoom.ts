@@ -1,6 +1,6 @@
 import {  Socket } from "socket.io";
-import emitInfoMessage from "./emit/emitInfoMessage";
-import { addRedis } from "../redis/redis";
+import emitInfoMessage from "../emit/emitInfoMessage";
+import { addRedis } from "../../redis/redis";
 export default function joinRoom(socket: Socket, redis: any): void{
     socket.on('join room',(roomName: string): void=>{
         try{

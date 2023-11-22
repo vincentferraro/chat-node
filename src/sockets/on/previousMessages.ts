@@ -1,9 +1,9 @@
 import { Socket } from "socket.io"
-import { io } from "../../app"
-import { getRedis } from "../redis/redis"
-import getGeneralPreviousDocuments from "../db/functions/getPreviousDocument"
-import emitPreviousMessage from "./emit/emitPreviousMessage"
-import { IMessageDocument } from "../interfaces/IMessageDocument"
+import { io } from "../../../app"
+import { getRedis } from "../../redis/redis"
+import getGeneralPreviousDocuments from "../../db/functions/getPreviousDocument"
+import emitPreviousMessage from "../emit/emitPreviousMessage"
+import { IMessageDocument } from "../../interfaces/IMessageDocument"
 // When user join room, user get previous messages history
 
 export default async function previousMessage(socket: Socket, redis:any){

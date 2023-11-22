@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
-import { removeRedis } from "../redis/redis";
-import emitInfoMessage from "./emit/emitInfoMessage";
+import { removeRedis } from "../../redis/redis";
+import emitInfoMessage from "../emit/emitInfoMessage";
 
 
 export default function leaveRoom(socket: Socket, redis: any):void{

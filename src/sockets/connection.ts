@@ -2,16 +2,16 @@ import { Server, Socket } from "socket.io";
 //
 // SOCKETS FUNCTIONS
 //
-import  joinRoom  from "./joinRoom";
-import  leaveRoom  from "./leaveRoom";
+import  joinRoom  from "./on/joinRoom";
+import  leaveRoom  from "./on/leaveRoom";
 import disconnection  from "./on/disconnection";
 import chatMessage from "./on/chatMessage";
-import setUsername from "./setUsername";
+import setUsername from "./on/setUsername";
 import getUsersRooms from "./on/getUsersRoom";
 import getRooms from "./on/getRooms";
-import initialization from "./initialization";
+import initialization from "./on/initialization";
 import { randomColor } from "../functions/randomColor";
-import previousMessage from "./previousMessages";
+import previousMessage from "./on/previousMessages";
 
 
 export default async function serverSocket(io:Server , redis : any){

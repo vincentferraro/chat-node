@@ -1,7 +1,7 @@
 import { Socket } from "socket.io"
-import emitInfoMessage from "./emit/emitInfoMessage"
-import { updateRedis } from "../redis/redis"
-import getSocketRoom from "./functions/getSocketRoom"
+import emitInfoMessage from "../emit/emitInfoMessage"
+import { updateRedis } from "../../redis/redis"
+import getSocketRoom from "../functions/getSocketRoom"
 
 
 export default function setUsername(socket:Socket, redis:any): void{
