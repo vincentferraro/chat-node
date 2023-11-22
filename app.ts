@@ -6,6 +6,12 @@ import { Server } from "socket.io";
 // MONGODB
 import connection from "./src/db/connectdb";
 
+// REDIS
+import { createClient } from "redis";
+
+// ROUTINES
+import { scheduledTasksServer} from "./src/routines/syncRedisMongo"
+
 // Creating Server
 
 const app : Express = express()
@@ -23,8 +29,10 @@ const io: Server = new Server(httpServer,{
 
 
 async function run(){
+  const redis = await createClient().connect()
   await connection()
-  await serverSocket(io)
+  scheduledTasksServer(redis)
+  await serverSocket(io, redis)
 
 }
 run()

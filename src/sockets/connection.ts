@@ -15,19 +15,15 @@ import previousMessage from "./previousMessages";
 
 import { createClient } from "redis";
 
+import { syncGeneralRoom } from "../services/syncGeneralRoom";
 
-
-export default async function serverSocket(io:Server){
+export default async function serverSocket(io:Server , redis : any){
 
     // REDIS CONNECTION
-
-    const redis = await createClient().connect()
 
     io.on('connection', async (socket: Socket) => {
         
         
-        
-
         socket.data.color = randomColor()
         
         //
@@ -56,7 +52,7 @@ export default async function serverSocket(io:Server){
         //
         // ON CHAT MESSAGE
         //
-        chatMessage(socket)
+        chatMessage(socket, redis)
         //
         // GET ROOMS
         //
