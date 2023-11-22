@@ -4,15 +4,13 @@ import {  Socket} from "socket.io";
 import emitChatMessage from "./emit/emitChatMessage";
 import { Data } from "../interfaces/message";
 
-import { IMessageDocument } from "../db/interfaces/IMessageDocument";
+import { IMessageDocument } from "../interfaces/IMessageDocument";
 import { addRedis, handleHistoryCache } from "../redis/redis";
 
 export default  function chatMessage(socket: Socket, redis: any):void{
 
     socket.on('chat message', async (data: Data) => {
         try{
-            
-            // const jsonStringify: string = JSON.stringify(handleMessage(socket.data.username,data))
             const input: IMessageDocument ={
                 userId:socket.id,
                 username: socket.data.username,

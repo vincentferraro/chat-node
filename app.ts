@@ -31,9 +31,12 @@ const io: Server = new Server(httpServer,{
 
 async function run(){
   const redis = await createClient().connect()
+  
   await connection()
-  // scheduledTasksServer(redis)
+  scheduledTasksServer(redis)
   await syncGeneralHistoryRoom(redis)
+  
+  
   await serverSocket(io, redis)
 
 }

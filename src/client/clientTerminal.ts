@@ -3,6 +3,7 @@ import  readline , { ReadLine} from 'readline'
 import handleCommand from './functions/handleCommand'
 
 import { setColor, setResetColor } from './functions/setColor'
+import { IMessageDocument } from '../interfaces/IMessageDocument'
 
 
 const socket = io('http://localhost:4000')
@@ -52,12 +53,9 @@ socket.on('get rooms',(data)=>{
 })
 
 socket.on('get previous messages', (data)=>{
-    data.forEach((message:string)=>{
-        const json = JSON.parse(message)
-        console.log(`${json.username} : ${json.message}`+resetColor)
+    data.map((message:string)=>JSON.parse(message)).sort((a:any,b:any)=>a.date - b.date).reverse().forEach((message:any)=>{
+        console.log(`${message.username} : ${message.message}`)
     })
-
-   
 })
 // socket.emit('setUsername', 'vinc')
 // socket.emit('get users room', 'general')

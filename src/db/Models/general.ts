@@ -1,7 +1,7 @@
 
 
 import { Schema, model } from "mongoose"
-import { IMessageDocument } from "../interfaces/IMessageDocument"
+import { IMessageDocument } from "../../interfaces/IMessageDocument"
 
 const generalShema = new Schema<IMessageDocument>
 ({

@@ -13,9 +13,6 @@ import initialization from "./initialization";
 import { randomColor } from "../functions/randomColor";
 import previousMessage from "./previousMessages";
 
-import { createClient } from "redis";
-
-import { syncGeneralRoom } from "../services/syncGeneralRoom";
 
 export default async function serverSocket(io:Server , redis : any){
 

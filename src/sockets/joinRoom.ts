@@ -4,13 +4,10 @@ import { addRedis } from "../redis/redis";
 export default function joinRoom(socket: Socket, redis: any): void{
     socket.on('join room',(roomName: string): void=>{
         try{
-            console.log(socket.rooms)
             if(roomName==="first" || roomName=== "second"){
                 socket.join(roomName)
                 
                 addRedis(redis,'user',roomName,{id:socket.id, username:socket.data.username})
-                // redis.sAdd(`user:room:${roomName}`, JSON.stringify({id:socket.id,username:socket.data.username}))
-                // redis.sAdd(`user:room:${roomName}`,)
                 emitInfoMessage(socket, `Welcome to '${roomName}' channel`)  
             }
         }catch(err){

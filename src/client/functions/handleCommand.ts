@@ -60,13 +60,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
         },
         // /to/<roomName>
         to:():void=>{
-            // const room = str.substring(4).split(' ')
-            // const subString = room.slice(1).join(" ")
-            //     if(io.sockets.adapter.rooms.has(room[0])){
-            //         const json = JSON.stringify(handleMessage(socket.data.username,subString))
-            //         io.to(room[0]).emit('chat message', json)
-            //     }
-            
+          // @TODO
         },
         // /previous <roomName>
         previous:():void=>{

@@ -52,15 +52,7 @@ function run(){
     
         socket.emit('get previous messages')
     },6000)
-    // Socket .ON
-    // socket.on('getUsersRoom',(data)=>{
-    //     console.log(data)
-    // })
-    
-
-    // socket.on('chat message', (msg)=>{
-    //     console.log(msg)
-    // })
+   
     socket.on('previous messages', (datas)=>{
         
         for(const data of datas){

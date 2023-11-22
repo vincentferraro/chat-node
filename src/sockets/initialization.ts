@@ -1,5 +1,7 @@
 import { Socket } from "socket.io";
 import { io } from "../../app";
+import { addRedis } from "../redis/redis";
+import emitInfoMessage from "./emit/emitInfoMessage";
 
 export default async function initialization(socket: Socket, redis: any): Promise<void>{
     try{
@@ -7,16 +9,10 @@ export default async function initialization(socket: Socket, redis: any): Promis
 
             // Initialize redisValue to store in REDIS CACHE
   
-            const redisValue = JSON.stringify({
-              id:socket.id,
-              username: username
-            })
-  
             socket.data.username= username
-  
-            redis.sAdd('user:room:general',redisValue)
             socket.join('general')
-            io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
+            addRedis(redis,'user','general',{id:socket.id,username:username})
+            emitInfoMessage(socket,`Welcom ${socket.data.username} to COLLOC-CHAT`)
           })
     }catch(err){
         console.error('ERROR initialization function', err)

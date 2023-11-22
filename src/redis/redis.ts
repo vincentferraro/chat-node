@@ -1,5 +1,5 @@
 
-import { IMessageDocument } from "../db/interfaces/IMessageDocument"
+import { IMessageDocument } from "../interfaces/IMessageDocument"
 import { Username } from "../interfaces/username"
 
 export async function addRedis(redis:any,type:string, room:string, json: IMessageDocument|Username):Promise<void>{
@@ -30,14 +30,14 @@ export async function handleUserRoomDisconection(redis:any, rooms:Array<string>,
 
 export async function handleHistoryCache(redis: any,room: string, json:IMessageDocument|Username): Promise<void>{
     try{
-        // redis.lpop(`history:room:general`)  @TODO: Find method to delete first cache item of key 'history:room:general'
+        redis.sPop(`history:room:${room}`)
         addRedis(redis,'history',room,json)
     }catch(err){
         console.error('ERROR removeRedis function:', err)
     }
 }
 
-export async function getRedis(redis:any,type:string, room: string):Promise<IMessageDocument|Username|undefined>{
+export async function getRedis(redis:any,type:string, room: string):Promise<Array<IMessageDocument|Username>|undefined>{
     try{
             return await redis.sMembers(`${type}:room:${room}`)
     }catch(err){

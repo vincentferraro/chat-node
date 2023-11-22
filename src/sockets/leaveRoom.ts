@@ -1,4 +1,6 @@
-import { Socket, Server } from "socket.io";
+import { Socket } from "socket.io";
+import { removeRedis } from "../redis/redis";
+import emitInfoMessage from "./emit/emitInfoMessage";
 
 
 export default function leaveRoom(socket: Socket, redis: any):void{
@@ -7,7 +9,8 @@ export default function leaveRoom(socket: Socket, redis: any):void{
             if(roomName==="first" || roomName=== "second"){
                 
                 socket.leave(roomName)
-                redis.sRem(`user:room:${roomName}`,JSON.stringify({id:socket.id, username: socket.data.username}))
+                removeRedis(redis,'user',roomName,{id:socket.id, username: socket.data.username})
+                emitInfoMessage(socket,`${socket.data.username} has leaved '${roomName}'room`)
             }
 
         }catch(err){
