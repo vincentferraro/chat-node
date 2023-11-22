@@ -32,7 +32,7 @@ export default async function serverSocket(io:Server , redis : any){
         initialization(socket, redis)
         
 
-        previousMessage(socket)
+        previousMessage(socket, redis)
         //
         // Set Username
         //

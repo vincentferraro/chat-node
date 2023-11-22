@@ -12,6 +12,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
             console.log("/username <username> - Set up the username")
             console.log("/leave_room <room_name> - Leave the room <room_name>")
             console.log("/join_room <room_name> - Join the room <room_name>")
+            console.log("/previous <room_name> - Get previous messages from <room_name>")
         },
         // /rooms
         rooms:():void=>{
@@ -66,6 +67,11 @@ export default async function handleCommand(msg: string,socket: Socket ){
             //         io.to(room[0]).emit('chat message', json)
             //     }
             
+        },
+        // /previous <roomName>
+        previous:():void=>{
+            const room = msg.toString().trim().split(' ')
+            socket.emit('get previous messages', room[1])
         }
     }
     const str: string = msg.toString().trim()

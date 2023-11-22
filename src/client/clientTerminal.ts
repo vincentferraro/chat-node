@@ -36,6 +36,8 @@ r1.on('line', (line) =>{
     }
 })
 
+
+
 socket.on('chat message', (data)=>{
     const json = JSON.parse(data)
     console.log(terminalColor+`${json.username} : ${json.message}`+resetColor)
@@ -47,6 +49,15 @@ socket.on('get users room', (data)=>{
 
 socket.on('get rooms',(data)=>{
     console.log(data)
+})
+
+socket.on('get previous messages', (data)=>{
+    data.forEach((message:string)=>{
+        const json = JSON.parse(message)
+        console.log(`${json.username} : ${json.message}`+resetColor)
+    })
+
+   
 })
 // socket.emit('setUsername', 'vinc')
 // socket.emit('get users room', 'general')

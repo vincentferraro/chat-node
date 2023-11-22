@@ -7,11 +7,12 @@ import { Server } from "socket.io";
 import connection from "./src/db/connectdb";
 
 // REDIS
-import { createClient } from "redis";
-
+import { createClient} from "redis";
+import { getRedis } from "./src/redis/redis";
 // ROUTINES
 import { scheduledTasksServer} from "./src/routines/syncRedisMongo"
 
+import {syncGeneralHistoryRoom} from "./src/services/syncGeneralHistoryRoom"
 // Creating Server
 
 const app : Express = express()
@@ -31,7 +32,8 @@ const io: Server = new Server(httpServer,{
 async function run(){
   const redis = await createClient().connect()
   await connection()
-  scheduledTasksServer(redis)
+  // scheduledTasksServer(redis)
+  await syncGeneralHistoryRoom(redis)
   await serverSocket(io, redis)
 
 }
