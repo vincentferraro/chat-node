@@ -1,5 +1,5 @@
 import {  Socket } from "socket.io";
-import { handleUserRoomDisconection } from "../redis/redis";
+import { handleUserRoomDisconection } from "../../redis/redis";
 
 export default function disconnection(socket: Socket, client: any): void{
     socket.on('disconnect', ():void => {

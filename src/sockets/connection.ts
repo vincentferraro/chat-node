@@ -4,11 +4,11 @@ import { Server, Socket } from "socket.io";
 //
 import  joinRoom  from "./joinRoom";
 import  leaveRoom  from "./leaveRoom";
-import disconnection  from "./disconnection";
-import chatMessage from "./chatMessage";
+import disconnection  from "./on/disconnection";
+import chatMessage from "./on/chatMessage";
 import setUsername from "./setUsername";
-import getUsersRooms from "./getUsersRoom";
-import getRooms from "./getRooms";
+import getUsersRooms from "./on/getUsersRoom";
+import getRooms from "./on/getRooms";
 import initialization from "./initialization";
 import { randomColor } from "../functions/randomColor";
 import previousMessage from "./previousMessages";
@@ -33,7 +33,7 @@ export default async function serverSocket(io:Server , redis : any){
         //
         // Set Username
         //
-        setUsername(socket)
+        setUsername(socket,redis)
         //
         // JOIN ROOM
         //

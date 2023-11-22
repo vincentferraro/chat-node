@@ -57,5 +57,9 @@ socket.on('get previous messages', (data)=>{
         console.log(`${message.username} : ${message.message}`)
     })
 })
+
+socket.on('info message',(data)=>{
+    console.log(data)
+})
 // socket.emit('setUsername', 'vinc')
 // socket.emit('get users room', 'general')

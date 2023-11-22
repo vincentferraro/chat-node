@@ -44,3 +44,14 @@ export async function getRedis(redis:any,type:string, room: string):Promise<Arra
         console.error('ERROR getRedis function:', err)
     }
 }
+
+export async function updateRedis(redis:any,type:string, rooms:Array<string>, json: IMessageDocument|Username, newjson:IMessageDocument|Username):Promise<void>{
+    try{
+        rooms.forEach(room=>{
+            removeRedis(redis,type,room,json)
+            addRedis(redis,type, room, newjson)
+        })
+    }catch(err){
+        console.error('ERROR updateRedis function :', err)
+    }
+}

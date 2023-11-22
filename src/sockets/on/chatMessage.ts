@@ -1,11 +1,11 @@
 import {  Socket} from "socket.io";
 
 
-import emitChatMessage from "./emit/emitChatMessage";
-import { Data } from "../interfaces/message";
+import emitChatMessage from "../emit/emitChatMessage";
+import { Data } from "../../interfaces/message";
 
-import { IMessageDocument } from "../interfaces/IMessageDocument";
-import { addRedis, handleHistoryCache } from "../redis/redis";
+import { IMessageDocument } from "../../interfaces/IMessageDocument";
+import { addRedis, handleHistoryCache } from "../../redis/redis";
 
 export default  function chatMessage(socket: Socket, redis: any):void{
 

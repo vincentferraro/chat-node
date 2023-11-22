@@ -10,7 +10,7 @@ import connection from "./src/db/connectdb";
 import { createClient} from "redis";
 import { getRedis } from "./src/redis/redis";
 // ROUTINES
-import { scheduledTasksServer} from "./src/routines/syncRedisMongo"
+import { scheduledTasksServer} from "./src/routines/scheduledTasksServer"
 
 import {syncGeneralHistoryRoom} from "./src/services/syncGeneralHistoryRoom"
 // Creating Server
