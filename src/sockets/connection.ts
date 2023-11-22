@@ -9,39 +9,31 @@ import chatMessage from "./chatMessage";
 import setUsername from "./setUsername";
 import getUsersRooms from "./getUsersRoom";
 import getRooms from "./getRooms";
+import initialization from "./initialization";
 import { randomColor } from "../functions/randomColor";
 import previousMessage from "./previousMessages";
 
-import { redisConnection } from "../redis/redis";
+import { createClient } from "redis";
+
 
 
 export default async function serverSocket(io:Server){
 
     // REDIS CONNECTION
 
-    const redis = await redisConnection()
+    const redis = await createClient().connect()
 
     io.on('connection', async (socket: Socket) => {
         
-        socket.on('initialization',(username)=>{
-
-          // Initialize redisValue to store in REDIS CACHE
-
-          const redisValue = JSON.stringify({
-            id:socket.id,
-            username: username
-          })
-
-          socket.data.username= username
-
-          redis.sAdd('user:room:general',redisValue)
-          socket.join('general')
-          io.to(socket.id).emit('welcome', `Hi ${socket.data.username}, Welcome to COLLOC-CHAT.`)
-        })
+        
         
 
         socket.data.color = randomColor()
         
+        //
+        // Initialization
+        //
+        initialization(socket, redis)
         
 
         previousMessage(socket)
@@ -52,7 +44,7 @@ export default async function serverSocket(io:Server){
         //
         // JOIN ROOM
         //
-        joinRoom(socket)
+        joinRoom(socket, redis)
         //
         // GET SOCKET
         //
