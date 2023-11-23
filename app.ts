@@ -3,6 +3,8 @@ import { createServer, Server as serv} from 'http'
 import serverSocket from "./src/sockets/connection";
 import { Server } from "socket.io";
 
+// PROCESS MANAGEMENT
+import { exit_process } from "./src/process/exit";
 // MONGODB
 import connection from "./src/db/connectdb";
 
@@ -39,9 +41,13 @@ async function run(){
   
   await serverSocket(io, redis)
 
+  exit_process(redis)
 }
 run()
 
+process.on('exit',()=>{
+  console.log('goodBye')
+})
 // ON CONNECTION
 
 httpServer.listen(port,host,()=>{

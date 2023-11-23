@@ -4,6 +4,7 @@ import { Username } from "../interfaces/username"
 
 export async function addRedis(redis:any,type:string, room:string, json: IMessageDocument|Username):Promise<void>{
     try{
+        console.log('add cache', type, room)
         redis.sAdd(`${type}:room:${room}`,JSON.stringify(json))
     }catch(err){
         console.error('ERROR addRedis function:', err)
@@ -37,7 +38,7 @@ export async function handleHistoryCache(redis: any,room: string, json:IMessageD
     }
 }
 
-export async function getRedis(redis:any,type:string, room: string):Promise<Array<IMessageDocument|Username>|undefined>{
+export async function getRedis(redis:any,type:string, room: string):Promise<Array<IMessageDocument|Username|string>|undefined>{
     try{
             return await redis.sMembers(`${type}:room:${room}`)
     }catch(err){
@@ -53,5 +54,13 @@ export async function updateRedis(redis:any,type:string, rooms:Array<string>, js
         })
     }catch(err){
         console.error('ERROR updateRedis function :', err)
+    }
+}
+
+export async function removeKeyRedis(redis:any, type:string, room:string){
+    try{
+        redis.del(`${type}:room:${room}`)
+    }catch(err){
+        console.error('ERROR removeKeyRedis function :', err)
     }
 }

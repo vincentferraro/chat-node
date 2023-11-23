@@ -1,5 +1,7 @@
 import General from "../db/Models/general"
-
+import { removeKeyRedis } from "../redis/redis"
+import errorMessage from "../messages/errorMessage"
+import { infoMessage } from "../messages/infoMessage"
 export async function syncGeneralRoom(redis:any){
         try{
             const messages= await redis.sMembers(`chat:room:general`)
@@ -7,12 +9,13 @@ export async function syncGeneralRoom(redis:any){
                 const documentsList = messages.map((message: string)=> JSON.parse(message))
                 const res = await General.insertMany(documentsList)
                 if(res){
-                        redis.del(`chat:room:general`)
+                    removeKeyRedis(redis,'chat','general')
+                    infoMessage('syncGeneralRoom', 'updated')
                     }
             }
             
-        }catch(err){
-            console.error('Error syncGeneralRoom', err)
+        }catch(err: any){
+            errorMessage('syncGeneralRoom', err)
         }
     }
     

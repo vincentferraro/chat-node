@@ -61,6 +61,12 @@ export default async function handleCommand(msg: string,socket: Socket ){
         // /to/<roomName>
         to:():void=>{
           // @TODO
+          const room = msg.slice(4,9)
+          const line = msg.split(' ')
+          console.log(msg, room, line)
+          if(room === 'room1' || room === 'room2'){
+            socket.emit('chat message', {room:room,message: line[1] })
+          }
         },
         // /previous <roomName>
         previous:():void=>{
