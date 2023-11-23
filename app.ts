@@ -33,21 +33,18 @@ const io: Server = new Server(httpServer,{
 
 async function run(){
   const redis = await createClient().connect()
-  
+  redis.FLUSHDB() // Reinitizalize the DB
   await connection()
   scheduledTasksServer(redis)
-  await syncGeneralHistoryRoom(redis)
+   await syncGeneralHistoryRoom(redis)
   
   
   await serverSocket(io, redis)
 
-  exit_process(redis)
 }
 run()
 
-process.on('exit',()=>{
-  console.log('goodBye')
-})
+
 // ON CONNECTION
 
 httpServer.listen(port,host,()=>{

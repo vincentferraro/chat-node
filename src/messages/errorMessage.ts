@@ -1,5 +1,5 @@
 
 
 export default function errorMessage(functionName:string,err: any):void{
-    console.error(`ERROR ${functionName} function :`, err)
+    console.error('\x1b[31m'+`ERROR ${functionName} function :`, err+'\x1b[0m')
 }
