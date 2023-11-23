@@ -1,4 +1,4 @@
-import getGeneralPreviousDocuments from "../db/functions/getPreviousDocument"
+import getGeneralPreviousDocuments from "../db/functions/general/getGeneralPreviousDocument"
 import { addRedis } from "../redis/redis"
 export async function syncGeneralHistoryRoom(redis: any){
 

@@ -6,7 +6,7 @@ import emitInfoMessage from "../emit/emitInfoMessage";
 export default function leaveRoom(socket: Socket, redis: any):void{
     socket.on('leave room',(roomName)=>{
         try{
-            if(roomName==="first" || roomName=== "second"){
+            if(roomName==="room1" || roomName=== "room2"){
                 
                 socket.leave(roomName)
                 removeRedis(redis,'user',roomName,{id:socket.id, username: socket.data.username})

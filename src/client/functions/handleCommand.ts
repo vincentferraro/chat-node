@@ -18,7 +18,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
         rooms:():void=>{
             socket.emit('get rooms')
             // @TODO
-            // const roomsAvailabe = ['general','first','second']
+            // const roomsAvailabe = ['general','room1','room2']
             // const roomsList = [...socket.rooms].filter(element =>{
             //     return roomsAvailabe.some((room)=> room.includes(element))
             // })
@@ -37,7 +37,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
         // /leave_room
         leave_room:():void=>{
             const room = msg.toString().trim().split(' ')
-            if(room[1]==="first" || room[1]=== "second"){
+            if(room[1]==="room1" || room[1]=== "room2"){
                 socket.emit('leave room',room[1])
             }else{ 
                 console.log("message info : You can't leave 'general' room")
@@ -46,7 +46,7 @@ export default async function handleCommand(msg: string,socket: Socket ){
         // /join_room 
         join_room:():void=>{
             const room = msg.toString().trim().split(' ')
-            if(room[1]==="first" || room[1]=== "second"){
+            if(room[1]==="room1" || room[1]=== "room2"){
                 socket.emit('join room', room[1])
             }
         },

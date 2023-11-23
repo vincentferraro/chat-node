@@ -3,7 +3,7 @@ import { Socket } from "socket.io";
 
 export default function getSocketRoom(socket: Socket):Array<string>|undefined{
     try{
-        const roomsList = ["general","first","second"]
+        const roomsList = ["general","room1","room2"]
             const arrayRooms: Array<string> = []
             socket.rooms.forEach(element=>{
                 roomsList.forEach(room => {

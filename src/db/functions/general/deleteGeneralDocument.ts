@@ -1,4 +1,4 @@
-import General from "../Models/general"
+import General from "../../Models/general"
 
 export default async function deleteGeneralDocument(id : String): Promise<boolean | void>{
 
