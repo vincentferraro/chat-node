@@ -4,7 +4,6 @@ import { Username } from "../interfaces/username"
 
 export async function addRedis(redis:any,type:string, room:string, json: IMessageDocument|Username):Promise<void>{
     try{
-        console.log('add cache', type, room)
         redis.sAdd(`${type}:room:${room}`,JSON.stringify(json))
     }catch(err){
         console.error('ERROR addRedis function:', err)
@@ -64,3 +63,4 @@ export async function removeKeyRedis(redis:any, type:string, room:string){
         console.error('ERROR removeKeyRedis function :', err)
     }
 }
+

@@ -6,3 +6,5 @@ export function exit_process(redis: any){
         redis.flushDb()
     })
 }
+
+process

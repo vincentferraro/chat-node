@@ -20,6 +20,7 @@ export default async function serverSocket(io:Server , redis : any){
 
     io.on('connection', async (socket: Socket) => {
         
+      console.log('User connect', socket.id)
         
         socket.data.color = randomColor()
         
