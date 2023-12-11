@@ -21,8 +21,10 @@ export default  function chatMessage(socket: Socket, redis: any):void{
             // No await because need fastest response from Server to Client
             addRedis(redis,'chat',data.room,input)
             handleHistoryCache(redis,data.room,input)
-            console.log(data)
-            emitChatMessage(data.room, JSON.stringify(input))
+            
+            const message= {...input, color: socket.data.color}
+            console.log(message)
+            emitChatMessage(data.room, JSON.stringify(message))
         }catch(err){
             console.error('Error handle chat message: ', err)
         }
